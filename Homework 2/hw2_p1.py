@@ -4,11 +4,10 @@ from sympy import *
 def get_A_matrix(
     a: symbols, alpha: symbols, d: symbols, theta: symbols, units: str = "radians"
 ) -> Matrix:
-    if units == "radians":
-        pass
-    elif units == "degrees":
-        deg_per_rad = pi / 180
-        alpha = alpha * deg_per_rad
+    if is_float_or_int(alpha):
+        alpha = convert_to_correct_units(alpha, units)
+    if is_float_or_int(theta):
+        theta = convert_to_correct_units(theta, units)
 
     A = Matrix(
         [
@@ -29,6 +28,22 @@ def get_A_matrix(
         ]
     )
     return A
+
+
+def is_float_or_int(angle: symbols) -> bool:
+    if type(angle) == float or type(angle) == int:
+        return True
+    else:
+        return False
+
+
+def convert_to_correct_units(angle: symbols, units: str) -> float:
+    if units == "radians":
+        pass
+    elif units == "degrees":
+        deg_per_rad = pi / 180
+        angle = angle * deg_per_rad
+    return angle
 
 
 """User Defined Variables"""
