@@ -1,4 +1,4 @@
-from sympy import Matrix sin cos
+from sympy import Matrix, sin, cos, symbols
 
 
 theta1, theta2, theta4, theta5, theta6 = symbols("theta1 theta2 theta4 theta5 theta6")
