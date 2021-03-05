@@ -3,4 +3,4 @@ This repository contains the code developed for group homeworks and projects for
 
 Setup - Install the required Python packages using the following command:
 
-pip install -r requirements.txt
+```pip install -r requirements.txt```
