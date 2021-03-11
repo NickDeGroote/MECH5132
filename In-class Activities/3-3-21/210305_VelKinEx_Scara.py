@@ -1,3 +1,8 @@
+# Nicholas Degroote, Jon Ander Martin, Melody Mayle, Heath Palmer, Benjamin Russ
+
+# March 3 - 5 class activities
+
+
 from sympy import Matrix, sin, cos, symbols
 
 

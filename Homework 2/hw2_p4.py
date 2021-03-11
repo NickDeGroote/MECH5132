@@ -1,5 +1,4 @@
- from sympy import *
-
+from sympy import *
 
 def get_A_matrix(
     a: symbols, alpha: symbols, d: symbols, theta: symbols, units: str = "radians"
@@ -50,8 +49,8 @@ def convert_to_correct_units(angle: symbols, units: str) -> float:
 """""" """""" """""" """""" """""" """""" """""" """""" """""" """""" """""" ""
 """""" """""" """""" """""" """""" """""" """""" """""" """""" """""" """""" ""
 units = "degrees"  # Units for alpha
-theta1, theta2, theta3, theta4, theta5, theta6, d5, ds = symbols(
-    "theta1 theta2 theta3 theta4 theta5 theta6 d5 ds"
+theta1, theta2, theta3, theta4, theta5, theta6, d2, d5, d6, ds = symbols(
+    "theta1 theta2 theta3 theta4 theta5 theta6 d2 d5 d6 ds"
 )  # Independent variables
 # Note: DH table assumes the order: a, alpha, d, theta
 dh_table = [
@@ -76,17 +75,70 @@ for link in dh_table:
     theta = link[3]
     curr_a_matrix = get_A_matrix(a, alpha, d, theta, units)
     rotation_matrices.append(curr_a_matrix)
-    print("\nRotation matrix from frame {} to frame {}:".format(count, count + 1))
-    print(pretty(curr_a_matrix))
-    print("LaTex Representation:")
-    print(latex(curr_a_matrix))  # Print LaTex code for matrix
     count = count + 1
+
 
 # Find composite rotation matrix by multiplying individual A matrices
 A_tot = eye(4)
 for A in rotation_matrices:
     A_tot = A_tot * A
-print("\nComposite Rotation Matrix:")
-print(simplify(A_tot))
-print("LaTex Representation:")
-print(latex(simplify(A_tot)))  # Print LaTex code for matrix
+
+r11, r12, r13, r21, r22, r23, r31, r32, r33, R = symbols(
+    "r11 r12 r13 r21 r22 r23 r31 r32 r33 R")
+
+xc, yc, zc, a2, a3, d, dist, ox, oy, oz = symbols(
+    "xc yc zc a2 a3 d dist ox, oy, oz")
+
+R = Matrix([[r11, r12, r13],
+            [r21, r22, r23],
+            [r31, r32, r33]])
+
+# o = Matrix([[16],
+#            [-d2],
+#            [13+d6]])
+
+o = Matrix([[ox],[oy],[oz]])
+
+oc = o-d6*R*Matrix([[0],
+                    [0],
+                    [1]])
+
+# d = 8
+# a2 = 8
+# a3 = 8
+
+# xc = oc[0]
+# yc = oc[1]
+# zc = oc[2]
+
+
+
+dist = xc**2 + yc**2 - d**2
+
+EU_th1 = atan2((dist)**0.5, d)
+EU_th2 = atan2((dist)**0.5, zc - d)
+EU_th3 = atan2((dist + (zc - d)**2 - a2**2 - a3**2)/(2*a2*a3),
+               (1 - ((dist + (zc-d)**2 - a2**2 - a3**2)/(2 * a2**2 * a3**2)))**0.5)
+
+#print("o")
+#print(pretty(o))
+#print("\nwrist center:")
+#print(pretty(oc))
+#print("\nEuler Theta 1")
+#print(EU_th1)
+
+print("LaTex Representation end effector:")
+print(latex(o))
+
+print("LaTex Representation wrist center:")
+print(latex(oc))
+
+print("LaTex Representation EU_th1:")
+print(latex(EU_th1))  # Print LaTex code for matrix
+
+print("LaTex Representation EU_th2:")
+print(latex(EU_th2))  # Print LaTex code for matrix
+
+print("LaTex Representation EU_th3:")
+print(latex(EU_th3))  # Print LaTex code for matrix
+
