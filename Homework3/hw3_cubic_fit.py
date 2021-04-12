@@ -118,9 +118,7 @@ def get_normalized_cubics(tf, points1, points2, velocities1, velocities2) -> Tup
         polynomials2.append((q2, time2, time2 + delta_t2))
         time2 = time2 + delta_t2
 
-    print(polynomials1)
-    print(polynomials2)
-
+    """
     polynomial_vals1 = []
     for polynomial in polynomials1:
         polynomial_vals1.append(labmdify_function(polynomial))
@@ -135,7 +133,8 @@ def get_normalized_cubics(tf, points1, points2, velocities1, velocities2) -> Tup
     plot_polynomials(normalized_polynomials2, r"${\Theta}_2$ vs. Time ")
     plt.show()
     return normalized_polynomials1, normalized_polynomials2
-
+    """
+    return polynomials1, polynomials2
 
 tf = 5
 points_1 = np.array([3*np.pi/2, np.pi/2])
@@ -143,3 +142,4 @@ points_2 = np.array([0, -1.135, 0])
 velocities_1 = np.array([0, 0])
 velocities_2 = np.array([0, 0, 0])
 normalized_polynomials = get_normalized_cubics(tf, points_1, points_2, velocities_1, velocities_2)
+print()
