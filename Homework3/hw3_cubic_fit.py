@@ -142,4 +142,11 @@ points_2 = np.array([0, -1.135, 0])
 velocities_1 = np.array([0, 0])
 velocities_2 = np.array([0, 0, 0])
 normalized_polynomials = get_normalized_cubics(tf, points_1, points_2, velocities_1, velocities_2)
-print()
+print(normalized_polynomials)
+
+
+
+
+
+
+
